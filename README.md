@@ -1,6 +1,6 @@
 # Stealth Smooch
 
-This integration adds support for [Smooch](https://smooch.io) powered bots within [Stealth](https://github.com/hellostealth/stealth). It can be used as a drop-in replacement for `stealth-facebook` with the exception some specialized quick reply buttons (such as Email & Phone).
+This integration adds support for [Smooch](https://smooch.io) powered bots within [Stealth](https://github.com/hellostealth/stealth). It can be used as a drop-in replacement for `stealth-facebook` with the exception of some specialized quick reply buttons (such as Email & Phone).
 
 [![Gem Version](https://badge.fury.io/rb/stealth-smooch.svg)](https://badge.fury.io/rb/stealth-smooch)
 
@@ -19,7 +19,7 @@ Stealth::Services::Smooch::Client.generate_jwt_token
 
 It will output the JWT token based on the `app_id`, `key_id`, and `secret` from your `services.yml` file.
 
-## Configure The Integration
+## Configure the Integration
 
 ```yaml
 default: &default
@@ -37,6 +37,15 @@ development:
 
 test:
   <<: *default
+```
+
+Additionally, you will need to create an initializer called `smooch.rb` in `config/initializers`:
+
+```ruby
+  SmoochApi.configure do |config|
+  config.api_key['Authorization'] = Stealth.config.smooch.jwt_token
+  config.api_key_prefix['Authorization'] = 'Bearer'
+end
 ```
 
 As with all Stealth integrations, integrations can be specified by environment.
