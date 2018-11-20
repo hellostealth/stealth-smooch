@@ -172,6 +172,15 @@ module Stealth
           enable_typing_indicator
         end
 
+        def persistent_menu
+          smooch_menu = SmoochApi::Menu.new
+
+          smooch_menu_items = generate_buttons(buttons: Stealth.config.smooch.setup.persistent_menu)
+          smooch_menu.items = smooch_menu_items
+
+          smooch_menu
+        end
+
         private
 
           def message_template(action:, message:)

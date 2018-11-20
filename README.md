@@ -28,6 +28,14 @@ default: &default
     key_id: <%= ENV['SMOOCH_KEY_ID'] %>
     secret: <%= ENV['SMOOCH_SECRET'] %>
     jwt_token: <%= ENV['SMOOCH_JWT_TOKEN'] %>
+    setup:
+      persistent_menu:
+        - type: 'url'
+          url: 'https://mywebsite.com'
+          text: 'About Us'
+        - type: 'payload'
+          payload: 'contact_support'
+          text: 'Contact Support'
 
 production:
   <<: *default
@@ -54,7 +62,9 @@ These are the supported setup options:
 
 ### persistent_menu
 
-Coming soon.
+The persistent menu is not supported by all integrations. For a complete list, please check out the [Smooch Pesistent Menu Docs](https://docs.smooch.io/rest/#persistent-menus).
+
+Setting the persistent menu is identical to creating buttons in text replies. Please see those docs for more info.
 
 ### Webhooks
 

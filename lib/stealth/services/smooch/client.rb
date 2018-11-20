@@ -13,7 +13,7 @@ module Stealth
 
         attr_reader :reply
 
-        def initialize(reply:, endpoint: 'messages')
+        def initialize(reply:)
           @reply = reply
           @smooch = SmoochApi::ConversationApi.new
         end
@@ -36,7 +36,7 @@ module Stealth
           jwtHeader = { kid: Stealth.config.smooch.key_id }
           token = JWT.encode(payload, Stealth.config.smooch.secret, 'HS256', jwtHeader)
 
-          puts "Your Smooch token is below. Please set the value `jwt_token` to the token in services.yml."
+          puts "#{Stealth::Logger.colorize('[JWT Token]', color: :green)} Your Smooch token is below. Please set the value `jwt_token` to the token in services.yml."
           puts token
         end
 
@@ -52,7 +52,22 @@ module Stealth
             webhook_create_body
           )
 
-          puts "Your Smooch webhooks have been registered to: #{endpoint}"
+          puts "#{Stealth::Logger.colorize('[Web Hooks]', color: :green)} Your Smooch webhooks have been registered to: #{endpoint}"
+        end
+
+        def self.set_persistent_menu(menu)
+          smooch_api = SmoochApi::IntegrationApi.new
+          response = smooch_api.list_integrations(Stealth.config.smooch.app_id)
+          response.integrations.each do |integration|
+            begin
+              smooch_api.update_integration_menu(Stealth.config.smooch.app_id, integration._id, menu)
+              puts "#{Stealth::Logger.colorize('[Persistent Menu]', color: :green)} set for #{integration.type} integration."
+            rescue SmoochApi::ApiError
+              # Not all integrations support the persistent menu
+              puts "#{Stealth::Logger.colorize('[Persistent Menu]', color: :red)} Skipping #{integration.type} integration. Persistent Menu is not supported."
+              next
+            end
+          end
         end
       end
 

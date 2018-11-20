@@ -16,10 +16,9 @@ module Stealth
               config.api_key_prefix['Authorization'] = 'Bearer'
             end
 
-            # reply_handler = Stealth::Services::Smooch::ReplyHandler.new
-            # reply = reply_handler.messenger_profile
-            # client = Stealth::Services::Smooch::Client.new(reply: reply, endpoint: 'messenger_profile')
-            # client.transmit
+            reply_handler = Stealth::Services::Smooch::ReplyHandler.new
+            menu = reply_handler.persistent_menu
+            Stealth::Services::Smooch::Client.set_persistent_menu(menu)
 
             if ENV['SMOOCH_ENDPOINT'].present?
               Stealth::Services::Smooch::Client.register_webhooks(endpoint: ENV['SMOOCH_ENDPOINT'])
