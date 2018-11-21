@@ -232,10 +232,6 @@ module Stealth
               smooch_item.media_url = element["image_url"]
             end
 
-            if element["default_action"].present?
-              smooch_item.default = true
-            end
-
             if element["buttons"].present?
               if element_type == 'card' && element["buttons"].size > 3
                 raise(ArgumentError, "Smooch card elements only support 3 buttons.")
