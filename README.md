@@ -317,3 +317,26 @@ To send an audio clip:
 The `audio_url` should be set to URL where the video has been uploaded.
 
 Audio replies support buttons and suggestions like text replies.
+
+## Development
+
+When adding features to this library, you might find it helpful to get a full printout of the HTTP requests and responses from Smooch.
+
+In order to configure your bot to show the debug output, modify your `smooch.rb` initializer like so:
+
+```ruby
+class SmoochLogger
+
+  def self.debug(msg)
+    Stealth::Logger.l(topic: 'smooch', message: msg)
+  end
+
+end
+
+SmoochApi.configure do |config|
+  config.logger = SmoochLogger
+  config.debugging = true
+  config.api_key['Authorization'] = Stealth.config.smooch.jwt_token
+  config.api_key_prefix['Authorization'] = 'Bearer'
+end
+```
