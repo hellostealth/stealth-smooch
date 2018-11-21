@@ -19,12 +19,18 @@ module Stealth
         end
 
         def transmit
-          response = @smooch.send(
-            reply[:reply_type],
-            Stealth.config.smooch.app_id,
-            reply[:recipient_id],
-            reply[:message]
-          )
+          begin
+            response = @smooch.send(
+              reply[:reply_type],
+              Stealth.config.smooch.app_id,
+              reply[:recipient_id],
+              reply[:message]
+            )
+          rescue SmoochApi::ApiError => e
+            msg = Stealth::Logger.colorize('[Error]', color: :red) + " #{e.code}: #{e.response_body}"
+            Stealth::Logger.l(topic: 'smooch', message: msg)
+            raise Stealth::Errors::ServiceError
+          end
 
           if response.present?
             Stealth::Logger.l(topic: "smooch", message: "Message #{response.message._id} successfully sent.")
