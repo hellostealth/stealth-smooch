@@ -208,8 +208,6 @@ Smooch distinguishes between a single card and a carousel of cards. This integra
 
 ```yaml
 - reply_type: cards
-  sharable: true
-  aspect_ratio: horizontal
   elements:
     - title: My App
       subtitle: Download our app below or visit our website for more info.
@@ -226,8 +224,6 @@ Smooch distinguishes between a single card and a carousel of cards. This integra
 
 The above is a single card with two buttons. If you want to include more cards, though, you would just need to specify another listing under the `elements` heading.
 
-The `sharable` and `aspect_ratio` attributes are optional. When `sharable` is set to `true`, a native share button is shown for the message. The `aspect_ratio` attribute specifies the aspect ratio of the main card image (specified by `image_url`). It can be set to `horizontal` or `square` with the default being `horizontal`.
-
 More info about Smooch cards [here](https://docs.smooch.io/rest/#carousel).
 
 ### List
@@ -238,7 +234,6 @@ To generate a list:
 
 ```yaml
 - reply_type: list
-  top_element_style: large
   buttons:
     - type: payload
       text: View More
@@ -246,25 +241,23 @@ To generate a list:
   elements:
     - title: Your Daily News Update
       subtitle: The following stories have been curated just for you.
-      image_url: "https://loremflickr.com/320/240"
+      image_url: "https://picsum.photos/320/240"
       buttons:
         - type: url
           url: "https://news-articles.com/199"
           text: 'View'
-          webview_height: 'tall'
     - title: Breakthrough in AI
       subtitle: Major breakthrough in the AI space.
-      image_url: "https://loremflickr.com/320/320"
-      default_action:
-        - url: "https://news-articles.com/232"
-          webview_height: 'tall'
+      image_url: "https://picsum.photos/320/320"
+      buttons:
+        - type: url
+          url: "https://news-articles.com/201"
+          text: 'View'
 ```
 
 The list itself supports having a single button that will be rendered on the bottom of the list. Each individual list item supports having one button as well. List items should have between 2-4 elements.
 
-In addition to the button, a list item can specify a default action. The default action is what will fired when a user taps the list item. A default action can be specified by setting the `default_action` attribute. The `default_action` should be configured as you would a `url` type button.
-
-The image of the first item in the list is displayed as a cover photo by default. To disable the cover image, set `top_element_style` to `compact`.
+More info about Smooch lists [here](https://docs.smooch.io/rest/#list).
 
 ### Images
 
