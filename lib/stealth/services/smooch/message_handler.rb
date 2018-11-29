@@ -21,7 +21,11 @@ module Stealth
         def coordinate
           # Queue the request processing so we can respond quickly to Smooch
           # and also keep track of this message
-          Stealth::Services::HandleMessageJob.perform_async('smooch', params, {})
+          Stealth::Services::HandleMessageJob.perform_async(
+            'smooch',
+            params,
+            headers
+          )
 
           # Relay our acceptance
           [200, 'OK']
