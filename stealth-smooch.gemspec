@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'stealth', '< 2.0'
   s.add_dependency 'jwt', '~> 2.1'
-  s.add_dependency 'smooch-api', '~> 4.0'
+  s.add_dependency 'smooch-api', '>= 4', '< 6'
 
   s.add_development_dependency 'rspec', '~> 3.6'
   s.add_development_dependency 'rspec_junit_formatter', '~> 0.3'
