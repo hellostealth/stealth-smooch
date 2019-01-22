@@ -33,7 +33,7 @@ module Stealth
           end
 
           if response.present?
-            Stealth::Logger.l(topic: "smooch", message: "Message #{response.message._id} successfully sent.")
+            Stealth::Logger.l(topic: "smooch", message: "Message #{response.message.id} successfully sent.")
           end
         end
 
@@ -66,7 +66,7 @@ module Stealth
           response = smooch_api.list_integrations(Stealth.config.smooch.app_id)
           response.integrations.each do |integration|
             begin
-              smooch_api.update_integration_menu(Stealth.config.smooch.app_id, integration._id, menu)
+              smooch_api.update_integration_menu(Stealth.config.smooch.app_id, integration.id, menu)
               puts "#{Stealth::Logger.colorize('[Persistent Menu]', color: :green)} set for #{integration.type} integration."
             rescue SmoochApi::ApiError
               # Not all integrations support the persistent menu
