@@ -58,7 +58,7 @@ module Stealth
               )
             elsif smooch_response['trigger'] == 'postback'
               smooch_postback = smooch_response['postbacks'].first
-              service_message.timestamp = Time.at(smooch_postback.dig('message', 'received').to_datetime
+              service_message.timestamp = Time.at(smooch_postback.dig('message', 'received')).to_datetime
 
               message_event = Stealth::Services::Smooch::PostbackEvent.new(
                 service_message: service_message,
