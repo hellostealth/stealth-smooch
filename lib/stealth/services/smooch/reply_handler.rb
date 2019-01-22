@@ -151,21 +151,21 @@ module Stealth
         end
 
         def enable_typing_indicator
-          message = SmoochApi::TypingActivityTrigger.new(
+          message = SmoochApi::ConversationActivity.new(
             role: 'appMaker',
             type: 'typing:start'
           )
 
-          message_template(action: 'trigger_typing_activity', message: message)
+          message_template(action: 'conversation_activity', message: message)
         end
 
         def disable_typing_indicator
-          message = SmoochApi::TypingActivityTrigger.new(
+          message = SmoochApi::ConversationActivity.new(
             role: 'appMaker',
             type: 'typing:stop'
           )
 
-          message_template(action: 'trigger_typing_activity', message: message)
+          message_template(action: 'conversation_activity', message: message)
         end
 
         def delay
