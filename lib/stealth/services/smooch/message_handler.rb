@@ -54,7 +54,7 @@ module Stealth
 
               message_event = Stealth::Services::Smooch::MessageEvent.new(
                 service_message: service_message,
-                params: @mooch_message
+                params: smooch_message
               )
             elsif smooch_response['trigger'] == 'postback'
               smooch_postback = smooch_response['postbacks'].first
@@ -62,7 +62,7 @@ module Stealth
 
               message_event = Stealth::Services::Smooch::PostbackEvent.new(
                 service_message: service_message,
-                params: smooch_postback['postbacks'].first
+                params: smooch_postback
               )
             end
 
