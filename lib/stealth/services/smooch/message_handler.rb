@@ -11,7 +11,7 @@ module Stealth
       class MessageHandler < Stealth::Services::BaseMessageHandler
 
         attr_reader :service_message, :params, :headers,
-                    :smooch_response, :smooch_message
+                    :smooch_response
 
         def initialize(params:, headers:)
           @params = params
@@ -34,9 +34,7 @@ module Stealth
         def process
           @service_message = ServiceMessage.new(service: 'smooch')
           @smooch_response = params
-          @smooch_message = @smooch_response['messages'].first
           service_message.sender_id = get_sender_id
-          service_message.timestamp = get_timestamp
 
           process_smooch_event
 
@@ -49,20 +47,22 @@ module Stealth
             smooch_response['appUser']['_id']
           end
 
-          def get_timestamp
-            Time.at(smooch_message['received']).to_datetime
-          end
-
           def process_smooch_event
             if smooch_response['trigger'] == 'message:appUser'
+              smooch_message = smooch_response['messages'].first
+              service_message.timestamp = Time.at(smooch_message['received']).to_datetime
+
               message_event = Stealth::Services::Smooch::MessageEvent.new(
                 service_message: service_message,
-                params: smooch_message
+                params: @mooch_message
               )
             elsif smooch_response['trigger'] == 'postback'
+              smooch_postback = smooch_response['postbacks'].first
+              service_message.timestamp = Time.at(smooch_postback.dig('message', 'received').to_datetime
+
               message_event = Stealth::Services::Smooch::PostbackEvent.new(
                 service_message: service_message,
-                params: smooch_response['postbacks'].first
+                params: smooch_postback['postbacks'].first
               )
             end
 
