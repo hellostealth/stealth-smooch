@@ -43,7 +43,7 @@ module Stealth
           message = SmoochApi::MessagePost.new(
             role: 'appMaker',
             type: 'image',
-            media_url: reply['image_url']
+            mediaUrl: reply['image_url']
           )
 
           if reply['suggestions'].present?
@@ -64,7 +64,7 @@ module Stealth
             role: 'appMaker',
             type: 'file',
             text: reply['text'],
-            media_url: reply['audio_url']
+            mediaUrl: reply['audio_url']
           )
 
           if reply['suggestions'].present?
@@ -85,7 +85,7 @@ module Stealth
             role: 'appMaker',
             type: 'file',
             text: reply['text'],
-            media_url: reply['video_url']
+            mediaUrl: reply['video_url']
           )
 
           if reply['suggestions'].present?
@@ -106,7 +106,7 @@ module Stealth
             role: 'appMaker',
             type: 'file',
             text: reply['text'],
-            media_url: reply['file_url']
+            mediaUrl: reply['file_url']
           )
 
           if reply['suggestions'].present?
@@ -229,7 +229,7 @@ module Stealth
             end
 
             if element["image_url"].present?
-              smooch_item.media_url = element["image_url"]
+              smooch_item.mediaUrl = element["image_url"]
             end
 
             if element["buttons"].present?
