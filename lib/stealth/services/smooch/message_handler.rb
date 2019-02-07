@@ -3,6 +3,7 @@
 
 require 'stealth/services/smooch/events/message_event'
 require 'stealth/services/smooch/events/postback_event'
+require 'stealth/services/smooch/events/conversation_start_event'
 
 module Stealth
   module Services
@@ -63,6 +64,13 @@ module Stealth
               message_event = Stealth::Services::Smooch::PostbackEvent.new(
                 service_message: service_message,
                 params: smooch_postback
+              )
+            elsif smooch_response['trigger'] == 'conversation:start'
+              service_message.timestamp = Time.at(smooch_response['timestamp']).to_datetime
+
+              message_event = Stealth::Services::Smooch::ConversationStartEvent.new(
+                service_message: service_message,
+                params: smooch_response
               )
             end
 
