@@ -19,6 +19,14 @@ Stealth::Services::Smooch::Client.generate_jwt_token
 
 It will output the JWT token based on the `app_id`, `key_id`, and `secret` from your `services.yml` file.
 
+### Webhooks
+
+<img src='smooch-webhooks.png' height='450' alt='Smooch Webhook Config' aria-label='Smooch Webhook Config' />
+
+You will want to add the `Webhooks` integration to the Smooch app you created above. Currently, this driver supports `AppUser messages`, `Postbacks`, and the `Conversation Start` webhooks.
+
+**Please note:** the `Conversation Start` webhook is configured to send a payload with the value of `conversation_start`. Please handle that accordingly in your `BotController`.
+
 ## Configure the Integration
 
 ```yaml
@@ -50,7 +58,7 @@ test:
 Additionally, you will need to create an initializer called `smooch.rb` in `config/initializers`:
 
 ```ruby
-  SmoochApi.configure do |config|
+SmoochApi.configure do |config|
   config.api_key['Authorization'] = Stealth.config.smooch.jwt_token
   config.api_key_prefix['Authorization'] = 'Bearer'
 end
